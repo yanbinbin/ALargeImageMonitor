@@ -1,0 +1,4 @@
+include ':largeimage-plugin'
+include ':largeimage'
+include ':app'
+rootProject.name = "LargeImageMonitor"
