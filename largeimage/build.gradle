@@ -1,16 +1,19 @@
 apply plugin: 'com.android.library'
+apply from: 'upload.gradle'
+
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+    }
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -22,10 +25,20 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["okhttp"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["picasso"]
+    implementation rootProject.ext.dependencies["fresco"]
+    implementation rootProject.ext.dependencies["image-loader"]
+    implementation rootProject.ext.dependencies["MMKV"]
+    implementation (rootProject.ext.dependencies["FloatWindow"]){
+        exclude module: 'support-v4'
+        exclude module: 'support-compat'
+    }
+    implementation rootProject.ext.dependencies["androidx"]
+    implementation (rootProject.ext.dependencies["recylcerview"]){
+        exclude module: 'support-compat'
+    }
 
 }
